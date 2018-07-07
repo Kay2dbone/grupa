@@ -1,0 +1,95 @@
+Teams
+*****************
+teamID, username, teamname, datecreated, email, regToken, country, stateofresidence, address, bankname, 
+account_number, accountname, incorporated(0/1), bondduration, specialization, TeamLeadID, accountType
+
+
+DevelopersRegister
+******************
+developerId interger(10) (DB serial auto increment id), emailVerificationLink,
+email(200),firstname (25), lastname(25), phonenumber, phonenumber2, country, state, address, password, accessToken
+[TeamInfo]: Teamname(30), registerdate, activationLevel
+teamID(equal to developerId of teamLeader/Administrator)
+TeamSpecialization(Web, Mobile, Web/Mobile, AI, BlockChain, Graphics/Design)
+[Security]: IP address, browser, GPS location, verificationStatus, resetPasswordToken, resetPasswordDate
+
+######DevTeams
+*************************************
+teamID (serialNoAutoincrement), TeamName(30), registeredBy, registerDate, TeamLeadID
+
+
+ProjectRegister
+****************
+projectId(Auto increament of table)
+clientId (from clientsTable)
+projectTitle(string 100)
+briefDescription(string 100)
+projectType(web, mobile, web&mobile, design)
+TargetAudience(General puclic, Private business app)
+ProjectLifeStage (new, existing requiring update)
+createDate(date the client made the request)
+Urgency: (normal, High)
+projectType: (MVP, )
+PaymentStatus(amount in $ defaults to 0)
+teamID (when selected defaults to null)
+dateTeamSelected
+projectKickOffDate/activationDate(Initial payment date/Team selection/acceptanceDate)
+expectedCompletionDate(projectKickOffDate+30days);
+deliveryStatus(if project has been completed #Defaults to 0)
+
+
+Mediatables (Table of files& documents exchanged between Grupa-Clients & Clients-devTeams)
+*******************************************************************************************
+mediaID (serialNoAutoincrement),
+mediaType(image, documents, pdf, videos),
+mediaDirectory(dictory where file was stored on server)
+mediaFilename
+fileSize
+projectedID
+transferDate
+transferTime
+senderID
+
+
+Clients
+***************
+email, phoneNumber, registerDate, LevelofTechnicality(novice, average, TechSavvy), country, password, token, resetpasswordToken, 
+
+Payments
+***********
+paymentId, paymentAPI(Stripe/PayPal/Paystack), clientID, projectID, projectReferece(MVP, SPRINT1, V2), 
+paymentDate, amountPaid, AmountRecieved(less commision), paymentGatway(MaterCard/VISA), transactionID, 
+transactionStatus, token, remark
+
+paymentTransactions (Payment within grupa to dev Teams) && TeadLeads to DevTeam
+*******************************************************************************
+transactionID (serialNoAutoincrement), projectID, #clientID, paymentType(initialPayment on project/final payment), amount, #expected (balance),
+transactionDate, recipientID(TeamleadID/AdministratorID), 
+
+
+SupportTicket (Grupa Customer Care)
+*************************************************
+issueID (serialNoAutoincrement), 
+requestType (complaints, inquiry, bug report, request a feature)
+requestDate
+subject
+message
+senderType(client/DevTeam/Developer)
+senderID
+messageDate
+projestID (if Applicable)
+attachment1, attachment2, attachment3, attachment4, attachment5 (maximum of 5 attachments)
+
+
+Communications!(MongoDB!)/FireBase
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+TeamCommunications
+*****************************************
+collectionsName: teamCommunications
+Fields: teamID, developerId, message, messageDateTime, channel(general_teamID)
+
+grupaCommunication
+Fields: channelID: projectID_teamID, senderID(developerId/clientID), message, messageDateTime, channel(general_teamID)
+
+
+
