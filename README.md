@@ -1,31 +1,31 @@
-# Adonis fullstack application
+# GRUPA: A Fullstack Application by Plat Hub
 
-This is the fullstack boilerplate for AdonisJs, it comes pre-configured with.
+Building the world best platform for software engineers
 
-1. Bodyparser
+<!-- 1. Bodyparser
 2. Session
 3. Authentication
 4. Web security middleware
 5. CORS
 6. Edge template engine
 7. Lucid ORM
-8. Migrations and seeds
+8. Migrations and seeds -->
 
 ## Setup
 
-Use the adonis command to install the blueprint
+<!-- Use the adonis command to install the blueprint
 
 ```bash
 adonis new yardstick
-```
+``` -->
 
-or manually clone the repo and then run `npm install`.
+<!-- or manually clone the repo and then run `npm install`. -->
 
 
-### Migrations
+<!-- ### Migrations
 
 Run the following command to run startup migrations.
 
 ```js
 adonis migration:run
-```
+``` -->
