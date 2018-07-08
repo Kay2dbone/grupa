@@ -15,17 +15,21 @@
 
 const Route = use('Route')
 
-Route.on('/').render('welcome')
+//Route.on('/').render('welcome')
 
 
 Route.group(()=>{
-    Route.get('/login', 'AuthController.login')
-    Route.post('/register', 'AuthController.register')
-    Route.post('/login', 'onboarding/DevController.login')   //.middleware('auth')
+    Route.get('/clientlogin', 'platform/AccessController.clientlogin')
+    Route.get('/devlogin', 'platform/AccessController.devlogin')
+    Route.post('/forgotpassword', 'platform/AccessController.forgotpassword')
+    Route.post('/resetpassword', 'platform/AccessController.resetpassword')
+    Route.post('/contactus', 'platform/AccessController.contactus')
+       //.middleware('auth')
     }).prefix('auth');
     
-    
-    Route.group(()=>{    //Onboarding Team Route
+     
+    //Onboarding Team Route
+    Route.group(()=>{
         Route.get('/', 'DeveloperController.index')
         Route.post('/newteam', 'onboarding/DevController.newteam')
         Route.post('/verifyemail', 'onboarding/DevController.verifyemail')
@@ -38,47 +42,62 @@ Route.group(()=>{
         }).prefix('on-dev');
     
     
-    Route.group(()=>{    //Onboarding Client Route
-        Route.get('/', 'onboarding/ClientController.index')
-        Route.post('/login', 'onboarding/ClientController.login')   //.middleware('auth')
-        Route.post('/dashboard', 'onboarding/ClientController.dashboard')
-        Route.get('/portfolio', 'onboarding/ClientController.portfolio')
-        Route.post('/addtoportfolio', 'onboarding/ClientController.addtoportfolio')
-        Route.post('/newteam', 'onboarding/ClientController.newteam')
+    //Onboarding Client Route
+    Route.group(()=>{  
+        Route.get('/register', 'onboarding/ClientController.register')
+        Route.post('/projectbrief', 'onboarding/ClientController.projectbrief')
         Route.post('/verifyemail', 'onboarding/ClientController.verifyemail')        
         }).prefix('on-client');
+
+        
+    Route.group(()=>{ //Team Dashboard
+        Route.get('/portfolio', 'dev/DeashboardController.portfolio')
+        Route.get('/projects', 'dev/DeashboardController.projects')
+        Route.post('/..', 'dev/DeashboardController...')
+        Route.post('/..', 'dev/DeashboardController...')
+        Route.post('/..', 'dev/DeashboardController...')
+        }).prefix('dev');
     
     
-    
-    Route.group(()=>{ //Dev Team Settings
-        Route.get('/changepassword', 'DeveloperController.login')
-        Route.post('/changebankdetails', 'DeveloperController.dashboard')
-        Route.post('/', 'DeveloperController.register')
-        Route.post('/register', 'DeveloperController.register')
-        Route.post('/register', 'DeveloperController.register')
-        Route.post('/register', 'DeveloperController.register')
-        Route.post('/register', 'DeveloperController.register')
+
+
+    //Dev Team Settings
+    Route.group(()=>{
+        Route.post('/changepassword', 'dev/settings/DeveloperController.login')
+        Route.post('/changebankdetails', 'dev/settings/DeveloperController.dashboard')
+        Route.post('/removeamember', 'dev/settings/DeveloperController.register')
+        Route.post('/addamember', 'dev/settings/DeveloperController.addamember')
+        Route.post('/..', 'dev/settings/DeveloperController...')
+
         }).prefix('dev/settings');
             
-    
-    Route.group(()=>{ //Client
-        Route.get('/changepassword', 'DeveloperController.login')
-        Route.post('/makepayment', 'DeveloperController.makepayment')
-        Route.post('/', 'DeveloperController.register')
-        Route.post('/startaproject', 'DeveloperController.register')
-        Route.post('/register', 'DeveloperController.register')
-        Route.post('/register', 'DeveloperController.register')
-        Route.post('/register', 'DeveloperController.register')
-        }).prefix('client');
+ 
+
+    //Client Dashboard
+    Route.group(()=>{ 
+        Route.get('/projectlist', 'clients/DashboardController.projectlist')
+        Route.post('/makepayment', 'clients/DashboardController.makepayment')
+        Route.post('/newproject', 'clients/DashboardController.newproject')
+        Route.post('/editproject', 'clients/DashboardController.editproject')
+        }).prefix('client/dashboard');
+
+        
+
+    //Client Settings
+    Route.group(()=>{
+        Route.get('/changepassword', 'clients/SettingController.changepassword')
+        Route.post('/..', 'clients/SettingController...')
+        }).prefix('client/settings');
         
     
-    Route.group(()=>{ //Grupa Admin
-        Route.get('/changepassword', 'DeveloperController.login')
-        Route.post('/changebankdetails', 'DeveloperController.dashboard')
-        Route.post('/', 'DeveloperController.register')
-        Route.post('/paymentreports', 'DeveloperController.paymentreports')
-        Route.post('/payments', 'DeveloperController.register')
-        Route.post('/paydeteam', 'DeveloperController.register')
-        Route.post('/register', 'DeveloperController.register')
+
+        //Grupa Admin
+    Route.group(()=>{
+        Route.post('/login', 'grupa/GrupaAdminController.login')
+        Route.get('/payments', 'grupa/GrupaAdminController.payments')
+        Route.get('/changepassword', 'grupa/GrupaAdminController.login')
+        Route.get('/paymentreports', 'grupa/GrupaAdminController.paymentreports')
+        Route.post('/paydevteam', 'grupa/GrupaAdminController.paydevteam')
+        Route.post('/dashboard', 'grupa/GrupaAdminController.dashboard')
         }).prefix('grupa');
     

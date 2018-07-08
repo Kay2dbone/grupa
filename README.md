@@ -1,4 +1,4 @@
-# GRUPA: A Fullstack Application by Plat Hub
+# GRUPA: A Fullstack Application by Plato Hub
 
 Building the world best platform for software engineers
 

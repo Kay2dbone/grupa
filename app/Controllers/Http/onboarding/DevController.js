@@ -19,7 +19,10 @@ class DevController {
     
     async registerDev (email, teamid){
         var regToken = crypto.randomBytes(50).toString('hex')
-        const newTeam = await Developer.create({ email: email, teamid: teamid, regtoken: regToken}) 
+        const newTeam = await Developer.create({ email: email, teamid: teamid, regtoken: regToken})
+
+        //SendEmail
+
         return newTeam  
     }
     
@@ -69,11 +72,9 @@ class DevController {
         const developerexist = await Database.select('email').from('developers').where({email:email})
 
         if (developerexist.length>0){
-            return {
-                status: 0,
-                message: "This user already exist!",
-                data:   ""
-                }
+
+            return this.apiResponse(0, "This user already exist!","")
+
         }
     
             /////>>>>>>>>>>>>SendEmail
@@ -82,12 +83,10 @@ class DevController {
             const newTeam = await Team.create({ email:email, teamname: teamname, regtoken: regToken})
 
             if (!newTeam.$attributes.id && !teamID>0){
-                return {
-                    status: 0,
-                    message: "Oops! Try again later!",
-                    data:   ""
-                    }    
+
+                return this.apiResponse(0, "Oops! Try again later!","")
             }
+
             var teamID  =newTeam.$attributes.id
 
             if (teamID && teamID>0){
@@ -97,12 +96,9 @@ class DevController {
                     a: newTeam.$attributes,
                     b: newDeveloper.$attributes
                 }
+
+                return this.apiResponse(1, "A token has been sent to your email address. Please provide the token to verify your email", samp)
     
-                return {
-                    status: 1,
-                    message: "A token has been sent to your email address. Please provide the token to verify your email",
-                    data:   samp
-                }
             }  
     }
     
@@ -112,18 +108,12 @@ class DevController {
       async verifyemail( { request }){
           const {email, regToken} = request.all()
                 if (!email || !this.validateEmail(email)){
-                    return {
-                        status: 0,
-                        message: "Invalid email type ",
-                        data:   ""
-                    }
+
+                    return this.apiResponse(0, "Invalid email type","")
+                    
                 }
                 if (!regToken){
-                    return {
-                        status: 0,
-                        message: "Invalid token ",
-                        data:   ""
-                    }
+                    return this.apiResponse(0, "Invalid token","")
                 }
     
     
@@ -353,7 +343,7 @@ class DevController {
                 var accessToken = crypto.randomBytes(90).toString('hex')
 
                 const setToken = await Database.table('developers')
-                .where('token', token)
+                .where('regtoken', token)
                 .update('accesstoken', accessToken)
             
                 return this.apiResponse(1, "Welcome to Grupa! Fill the form to complete your registration", accessToken)
